@@ -16,7 +16,7 @@ RUN sigal build -v . /build
 
 
 ## Begin runtime layer
-FROM docker.io/halverneus/static-file-server:v1.8.8
+FROM docker.io/halverneus/static-file-server:v1.8.11
 
 # Copy static site from build layer to runtime
 COPY --from=builder /build /web

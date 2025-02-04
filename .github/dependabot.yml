@@ -1,0 +1,14 @@
+# Check weekly for newer versions of the Docker base image(s) and python
+# requirements.txt. Open a PR when a new version is available.
+
+version: 2
+updates:
+  - package-ecosystem: "docker"
+    directory: "sources/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "pip"
+    directory: "sources/"
+    schedule:
+      interval: "weekly"

@@ -1,0 +1,21 @@
+# Create an ImageStreamTag (and implicit ImageStream) that points to GH Packages
+
+apiVersion: image.openshift.io/v1
+kind: ImageStreamTag
+metadata:
+  # The implicit ImageStream will be "imagestream-photo-album", and this tag will be "latest"
+  name: imagestream-photo-album:latest
+
+  namespace: oit-sepe-test
+
+tag:
+  name: latest
+  # Point to GH Packages
+  from:
+    kind: DockerImage
+
+    name: ghcr.io/davegoldhammer/goldhamm-photo-album/photo-album:latest
+
+  # Periodically check for new releases
+  importPolicy:
+    scheduled: true

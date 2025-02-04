@@ -5,6 +5,19 @@ metadata:
   namespace: oit-sepe-test
   labels:
     app: my-photo-album
+  # Tell Deployment to update iteslf when the ImageStreamTag changes
+  annotations:
+    # The ">-" means this JSON chunk is quoted as a string, and not interpreted as part of the YAML object
+    image.openshift.io/triggers: >-
+      [
+        {
+          "from": {
+            "kind": "ImageStreamTag",
+            "name": "imagestream-photo-album:latest"
+          },
+          "fieldPath": "spec.template.spec.containers[?(@.name==\"photo-album\")].image"
+        }
+      ]      
 spec:
   # Tell Deployment how to find its Pod(s)
   selector:
@@ -18,8 +31,8 @@ spec:
     spec:
       containers:
       - name: photo-album
-        # Point directly to GH Packages
-        image: ghcr.io/davegoldhammer/goldhamm-photo-album/photo-album:latest
+        # Point to image through the ImageStreamTag
+        image: imagestream-photo-album:latest
         # Enable DEBUG logging on the static web server
         env:
         - name: DEBUG
